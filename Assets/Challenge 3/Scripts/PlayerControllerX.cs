@@ -29,19 +29,13 @@ public class PlayerControllerX : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
 
         // Apply a small upward force at the start of the game
-        playerRb.AddForce(Vector3.up * 2, ForceMode.Impulse);
+        playerRb.AddForce(Vector3.up * 5, ForceMode.Impulse);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        // While space is pressed and player is low enough, float up
-        if (Input.GetKey(KeyCode.Space) && !gameOver && isLowEnough)
-        {
-            playerRb.AddForce(Vector3.up * floatForce, ForceMode.Impulse);
-        }
-
         if(transform.position.y >= topBound)
         {
             isLowEnough = false;
@@ -50,6 +44,13 @@ public class PlayerControllerX : MonoBehaviour
         {
             isLowEnough = true;
         }
+
+        // While space is pressed and player is low enough, float up
+        if (Input.GetKey(KeyCode.Space) && !gameOver && isLowEnough)
+        {
+            playerRb.AddForce(Vector3.up * floatForce, ForceMode.Impulse);
+        }
+
     }
 
     private void OnCollisionEnter(Collision other)
@@ -74,7 +75,7 @@ public class PlayerControllerX : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Ground") && !gameOver)
         {
-            playerRb.AddForce(Vector3.up * 1.5f, ForceMode.Impulse);
+            playerRb.AddForce(Vector3.up * 5f, ForceMode.Impulse);
             playerAudio.PlayOneShot(groundSound, 1.0f);
         }
 
